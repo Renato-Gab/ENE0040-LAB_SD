@@ -1,1 +1,1 @@
-# ENE0040---Laborat-rio-de-Sistemas-Digitais
+# ENE0040 - Laboratório de Sistemas Digitais
