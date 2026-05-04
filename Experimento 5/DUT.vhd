@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.all;
 
 entity dut is
 	port(A, B: in std_logic_vector (3 downto 0);
-	     S: out std_logic);
+	     S: out std_logic_vector(4 downto 0);
 end dut;
 
 architecture dut_arch of dut is
@@ -11,38 +11,12 @@ component somador is
 	port(A,B,Cin: in std_logic;
 	     S, Cout: out std_logic);
 end component;
-	signal sCout, sY: std_logic_vector (3 downto 0);
+	signal w1, w2, w3, w4: std_logic;
+
 begin
-
-somador0 : somador
-	port map(
-	A => A(0),
-	B => B(0),
-	Cin => '0',
-	S => sY(0),
-	Cout => sCout(0));
-
-somador1 : somador
-	port map(
-	A => A(1),
-	B => B(1),
-	Cin => sCout(0),
-	S => sY(1),
-	Cout => sCout(1));
-
-somador2 : somador
-	port map(
-	A => A(2),
-	B => B(2),
-	Cin => sCout(1),
-	S => sY(2),
-	Cout => sCout(2));
-
-somador3 : somador
-	port map(
-	A => A(3),
-	B => B(3),
-	Cin => sCout(2),
-	S => sY(3),
-	Cout => sCout(3));
-S <= sCout(3) & sY;
+    INT1 : SUMM port map(A(0), B(0), '0', S(0), w1);
+    INT2 : SUMM port map(A(1), B(1), w1, S(1), w2);
+    INT3 : SUMM port map(A(2), B(2), w2, S(2), w3);
+    INT4 : SUMM port map(A(3), B(3), w3, S(3), w4);
+    S(4) <= w4;
+end dut_arch;
