@@ -20,17 +20,20 @@ component GM is
 end component;
 
 component TESTBENCH is
-    port (
-        DUT_out, GM_out: in std_logic_vector(4 downto 0);
-        A, B: out std_logic_vector(3 downto 0)
-    );
-end component;
+        port (
+            DUT_out, GM_out: in std_logic_vector(4 downto 0);
+            A, B: out std_logic_vector(3 downto 0);
+            erro_out: out std_logic
+        );
+    end component;
 
-signal A, B : std_logic_vector(3 downto 0);
-signal DUT_out, GM_out : std_logic_vector(4 downto 0);
+    signal A, B : std_logic_vector(3 downto 0);
+    signal DUT_out, GM_out : std_logic_vector(4 downto 0);
+    signal erro : std_logic;
 
 begin
     INT1 : DUT port map(A, B, DUT_out);
     INT2 : GM port map(A, B, GM_out);
-    INT3 : TESTBENCH port map(DUT_out, GM_out, A, B);
+    INT3 : TESTBENCH port map(DUT_out, GM_out, A, B, erro);
+    
 end TOPMODULE_ARCH;
