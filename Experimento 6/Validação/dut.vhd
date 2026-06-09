@@ -1,28 +1,32 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity ff_jk_dut is
-    Port ( clk, rst : in STD_LOGIC; J, K : in STD_LOGIC; Q : out STD_LOGIC );
-end ff_jk_dut;
+entity ff_jk_as_d_dut is
+    Port ( 
+        clk, rst : in  STD_LOGIC;
+        D        : in  STD_LOGIC;
+        Q        : out STD_LOGIC 
+    );
+end ff_jk_as_d_dut;
 
-architecture Behavioral of ff_jk_dut is
-    signal q_state : STD_LOGIC := '0';
+architecture Structural of ff_jk_as_d_dut is
+    component ff_jk_core is
+        Port ( clk, rst : in STD_LOGIC; J, K : in STD_LOGIC; Q : out STD_LOGIC );
+    end component;
+
+    -- Fios internos para conectar nas portas J e K do componente interno
+    signal internal_j, internal_k : STD_LOGIC;
 begin
-    process(clk, rst)
-    begin
-        if rst = '1' then
-            q_state <= '0';
-        elsif rising_edge(clk) then
-            if (J = '0' and K = '0') then
-                q_state <= q_state;         -- Mantém estado
-            elsif (J = '0' and K = '1') then
-                q_state <= '0';             -- Reset (grava 0)
-            elsif (J = '1' and K = '0') then
-                q_state <= '1';             -- Set (grava 1)
-            elsif (J = '1' and K = '1') then
-                q_state <= not q_state;     -- Alterna (Toggle)
-            end if;
-        end if;
-    end process;
-    Q <= q_state;
-end Behavioral;
+    -- AQUI ESTÁ A LÓGICA DE CONVERSÃO
+    internal_j <= D;
+    internal_k <= not D;
+
+    jk_core_inst: ff_jk_core
+        port map (
+            clk => clk,
+            rst => rst,
+            J   => internal_j,
+            K   => internal_k,
+            Q   => Q
+        );
+end Structural;
