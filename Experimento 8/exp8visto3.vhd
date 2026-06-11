@@ -84,8 +84,8 @@ begin
         port map (
             clock  => clock,
             reset  => combo_reset_contador, -- Reset controlado pelo sistema e FSM
-            enable => '1',
-            rci    => '1',
+            enable => '0',
+            rci    => '0',
             load   => '0',
             d_uni  => "0000",
             d_dez  => "0000",
