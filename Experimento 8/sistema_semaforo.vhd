@@ -51,8 +51,8 @@ begin
         port map (
             clock  => clock,
             reset  => reset,
-            enable => '1',         -- Sempre habilitado para contar
-            rci    => '1',         -- Ripple Carry Input ativo
+            enable => '0',         -- Sempre habilitado para contar
+            rci    => '0',         -- Ripple Carry Input ativo
             load   => '0',         -- Desabilita a carga paralela
             d_uni  => "0000",      -- Entradas de dados zeradas
             d_dez  => "0000",
